@@ -11857,3 +11857,18 @@ h1, .cover-copy h1 {
   padding: 14px 18px !important;
   overflow: hidden !important;
 }
+
+/* ── COVER SLIDE FINAL RESET: reduce h1 so all 3 cards show ──── */
+.cover-slide .cover-copy h1,
+.cover-slide[data-view-scale] .cover-copy h1,
+h1, .cover-copy h1 {
+  font-size: clamp(18px, 1.9vw, 28px) !important;
+  line-height: .9 !important;
+}
+
+/* Cover h1 — balanced size, not too small or too large */
+.cover-slide .cover-copy h1,
+h1, .cover-copy h1 {
+  font-size: clamp(22px, 2.4vw, 36px) !important;
+  line-height: .92 !important;
+}
