@@ -6,14 +6,14 @@
     <title>PG&E Senior GIS Product Designer Project Walkthrough</title>
     <link rel="stylesheet" href="styles.css">
   <style>
-    /* Inline override: ensures cover h1 is compact enough that all 3 meta cards fit at 1440x900 */
-    .cover-slide .cover-copy h1 { font-size: clamp(20px, 2.5vw, 36px) !important; line-height: .88 !important; }
-    .cover-slide .cover-copy .lead { font-size: 12px !important; margin-top: 5px !important; line-height: 1.35 !important; }
-    .cover-slide .cover-meta { grid-template-columns: 1fr !important; gap: 5px !important; margin-top: 7px !important; }
-    .cover-slide .cover-meta article { padding: 8px 11px !important; min-height: 0 !important; }
+    /* Cover slide: scale h1 down so all 3 meta cards are visible at 1440x900 */
+    .cover-slide .cover-copy h1 { font-size: clamp(18px, 1.9vw, 28px) !important; line-height: .9 !important; }
+    .cover-slide .cover-copy .lead { font-size: 12px !important; margin-top: 6px !important; line-height: 1.38 !important; }
+    .cover-slide .cover-meta { grid-template-columns: 1fr !important; gap: 5px !important; margin-top: 8px !important; }
+    .cover-slide .cover-meta article { padding: 8px 12px !important; min-height: 0 !important; }
     .cover-slide .cover-meta span { font-size: 10px !important; margin-bottom: 2px !important; }
     .cover-slide .cover-meta strong { font-size: 12px !important; line-height: 1.2 !important; }
-    .cover-slide .cover-copy { overflow: hidden !important; }
+    .cover-slide .cover-copy { overflow: hidden !important; display: flex !important; flex-direction: column !important; }
   </style>
   </head>
   <body>
