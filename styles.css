@@ -9321,3 +9321,2539 @@ h3 {
     min-height: clamp(760px, 26vh, 1060px) !important;
   }
 }
+
+
+/* ================================================================
+   VISUAL FIX PASS — based on screenshot review at 1440×900
+   Goal: every slide fits entirely within the viewport, no clipping,
+   no overflow, proper spacing and alignment throughout.
+   ================================================================ */
+
+/* ── 1. CORE TOKENS ─────────────────────────────────────────── */
+:root {
+  --rail-width: 270px;
+  --slide-inset: 16px;
+  --control-height: 68px;
+  --slide-pad-x: 42px;
+  --slide-pad-y: 36px;
+  --content-gap: 20px;
+  --artifact-gap: 12px;
+  --card-pad: 18px;
+  --display-size: clamp(26px, 2.4vw, 44px);
+  --body-size: clamp(13px, .85vw, 16px);
+  --label-size: clamp(10px, .7vw, 13px);
+  --card-title-size: clamp(14px, 1.05vw, 20px);
+  --artifact-bg: rgba(13, 24, 22, .94);
+}
+
+/* ── 2. SHELL ───────────────────────────────────────────────── */
+.deck-shell {
+  grid-template-columns: var(--rail-width) minmax(0, 1fr);
+}
+
+.deck-rail {
+  padding: 20px 16px;
+  gap: 18px;
+}
+
+.rail-brand {
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.rail-brand span {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.rail-brand strong {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.slide-nav {
+  gap: 4px;
+}
+
+.nav-item {
+  grid-template-columns: 30px minmax(0, 1fr);
+  min-height: 38px;
+  padding: 6px 10px;
+  gap: 8px;
+}
+
+.nav-item span,
+.nav-item strong {
+  font-size: 13px;
+}
+
+.rail-links a {
+  min-height: 40px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+/* ── 3. STAGE + SLIDE SHELL ──────────────────────────────────── */
+.stage {
+  padding: var(--slide-inset) var(--slide-inset) var(--control-height) !important;
+}
+
+.slide {
+  inset: var(--slide-inset) var(--slide-inset) var(--control-height) !important;
+  padding: var(--slide-pad-y) var(--slide-pad-x) !important;
+  overflow: hidden !important; /* prevent scroll — content must fit */
+}
+
+/* ── 4. CONTROLS ─────────────────────────────────────────────── */
+.deck-controls {
+  position: fixed !important;
+  left: calc(var(--rail-width) + var(--slide-inset)) !important;
+  right: var(--slide-inset) !important;
+  bottom: 12px !important;
+  grid-template-columns: 40px minmax(0, 1fr) auto 40px !important;
+  gap: 10px !important;
+}
+
+.control-button {
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 22px !important;
+}
+
+.progress-wrap {
+  height: 5px !important;
+}
+
+.slide-count {
+  font-size: 13px !important;
+}
+
+/* ── 5. ACTIVE SLIDE LAYOUT ──────────────────────────────────── */
+.slide.active {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.slide:not(.cover-slide).active {
+  justify-content: flex-start !important;
+  gap: var(--content-gap) !important;
+}
+
+/* PG&E GIS badge */
+.slide::after {
+  top: 10px !important;
+  right: 14px !important;
+  width: 80px !important;
+  height: 28px !important;
+  font-size: 11px !important;
+}
+
+/* ── 6. SLIDE HEAD ───────────────────────────────────────────── */
+.slide-head,
+.persona-slide .slide-head,
+.research-evidence-slide .slide-head,
+.heuristic-findings-slide .slide-head,
+.wireframe-slide .slide-head,
+.style-guide-slide .slide-head,
+.walkthrough-slide .slide-head,
+.improve-slide .slide-head,
+.wcag-slide .slide-head,
+.live-site-slide .slide-head,
+.appendix .slide-head {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 0 var(--content-gap) !important;
+  padding: 0 0 14px !important;
+}
+
+.eyebrow {
+  font-size: var(--label-size) !important;
+  margin-bottom: 8px !important;
+}
+
+h1, .cover-copy h1 {
+  font-size: clamp(32px, 3.5vw, 54px) !important;
+  line-height: .96 !important;
+}
+
+h2,
+.slide h2,
+.slide:not(.cover-slide) h2,
+.persona-slide h2,
+.research-evidence-slide h2,
+.heuristic-findings-slide h2,
+.wireframe-slide h2,
+.style-guide-slide h2,
+.walkthrough-slide h2,
+.improve-slide h2,
+.wcag-slide h2,
+.live-site-slide h2 {
+  font-size: var(--display-size) !important;
+  line-height: 1.05 !important;
+  max-width: none !important;
+}
+
+.lead, .frame-note {
+  font-size: var(--body-size) !important;
+  line-height: 1.45 !important;
+  margin-top: 8px !important;
+}
+
+/* ── 7. CARD / GRID CONTAINERS — remove rigid min-heights ────── */
+.slide-grid,
+.research-layout,
+.comparison-matrix,
+.journey-map,
+.decision-grid,
+.gis-strategy-grid,
+.wireframe-carousel,
+.project-frame,
+.anatomy-board,
+.impact-chain,
+.priority-matrix,
+.validation-loop,
+.wcag-principles,
+.wcag-audit,
+.outcome-grid,
+.transfer-grid,
+.source-grid,
+.appendix-grid,
+.research-instrument,
+.site-stepper,
+.walkthrough-grid,
+.walkthrough-visual,
+.journey-test-grid,
+.win-grid,
+.backlog-grid,
+.artifact-map,
+.style-guide-board,
+.stakeholder-grid,
+.evidence-method-row,
+.roadmap-grid,
+.heuristic-grid,
+.anatomy-grid,
+.rubric-grid,
+.question-board,
+.metric-row,
+.problem-stack,
+.analysis-table,
+.accessibility-stack,
+.iteration-flow,
+.cover-visual,
+.decision-grid,
+.gis-strategy-grid {
+  min-height: 0 !important;
+  flex: 1 1 auto;
+}
+
+/* ── 8. CARDS: compact padding, no rigid min-height ──────────── */
+.metric-row article,
+.problem-stack article,
+.decision-grid article,
+.gis-strategy-grid article,
+.gis-flow article,
+.roadmap-grid article,
+.outcome-grid article,
+.stakeholder-grid article,
+.analysis-table article,
+.accessibility-stack article,
+.iteration-flow article,
+.transfer-grid article,
+.heuristic-grid article,
+.win-grid article,
+.backlog-grid article,
+.appendix-grid article,
+.rubric-grid article,
+.anatomy-grid article,
+.artifact-map article,
+.site-stepper article,
+.walkthrough-visual article,
+.journey-test-grid article,
+.evidence-method-row article,
+.wcag-principles article,
+.source-grid a,
+.takeaway,
+.executive-summary,
+.tracking-band,
+.wcag-next,
+.evidence-synthesis,
+.question-board article {
+  min-height: 0 !important;
+  padding: var(--card-pad) !important;
+}
+
+/* Card text sizes */
+.opening-card strong,
+.problem-stack strong,
+.executive-summary strong,
+.gis-strategy-grid strong,
+.gis-flow strong,
+.roadmap-grid strong,
+.outcome-grid strong,
+.metric-row strong,
+.stakeholder-grid strong,
+.question-board strong,
+.survey-card strong,
+.analysis-table strong,
+.takeaway strong,
+.project-frame strong,
+.accessibility-stack strong,
+.iteration-flow strong,
+.transfer-grid strong,
+.heuristic-grid strong,
+.win-grid strong,
+.backlog-grid strong,
+.appendix-grid strong,
+.rubric-grid strong,
+.anatomy-grid strong,
+.artifact-map strong,
+.source-grid strong,
+.site-stepper strong,
+.walkthrough-visual strong,
+.journey-test-grid strong,
+.decision-grid h3 {
+  font-size: var(--card-title-size) !important;
+  line-height: 1.2 !important;
+}
+
+.opening-card span,
+.problem-stack span,
+.executive-summary span,
+.decision-grid span,
+.gis-strategy-grid span,
+.gis-flow span,
+.roadmap-grid span,
+.outcome-grid span,
+.metric-row span,
+.stakeholder-grid span,
+.question-board span,
+.survey-card span,
+.analysis-table span,
+.takeaway span,
+.project-frame span,
+.accessibility-stack span,
+.iteration-flow span,
+.transfer-grid span,
+.heuristic-grid span,
+.win-grid span,
+.backlog-grid span,
+.appendix-grid span,
+.rubric-grid span,
+.anatomy-grid span,
+.artifact-map span,
+.source-grid span,
+.eyebrow {
+  font-size: var(--label-size) !important;
+  margin-bottom: 6px !important;
+  letter-spacing: .06em !important;
+}
+
+.slide p:not(.eyebrow):not(.lead):not(.frame-note),
+.slide li,
+.slide small,
+.opening-card p,
+.problem-stack p,
+.decision-grid p,
+.gis-strategy-grid p,
+.roadmap-grid p,
+.outcome-grid p,
+.metric-row p,
+.stakeholder-grid p,
+.survey-card p,
+.analysis-table p,
+.project-frame p,
+.iteration-flow p,
+.transfer-grid p,
+.heuristic-grid p,
+.win-grid p,
+.backlog-grid p,
+.appendix-grid p,
+.rubric-grid p,
+.anatomy-grid p,
+.artifact-map p,
+.source-grid p {
+  font-size: var(--body-size) !important;
+  line-height: 1.4 !important;
+  margin-top: 6px !important;
+}
+
+/* Gaps inside grids */
+.metric-row,
+.problem-stack,
+.decision-grid,
+.gis-strategy-grid,
+.gis-flow,
+.roadmap-grid,
+.outcome-grid,
+.stakeholder-grid,
+.question-board,
+.analysis-table,
+.accessibility-stack,
+.iteration-flow,
+.transfer-grid,
+.heuristic-grid,
+.win-grid,
+.backlog-grid,
+.appendix-grid,
+.rubric-grid,
+.anatomy-grid,
+.artifact-map,
+.source-grid,
+.slide-grid,
+.research-layout,
+.comparison-matrix,
+.journey-map,
+.wireframe-carousel,
+.style-guide-board {
+  gap: var(--artifact-gap) !important;
+}
+
+/* ── 9. TABLE ROWS: compact ──────────────────────────────────── */
+.comparison-matrix > div,
+.research-table > div,
+.evidence-matrix > div,
+.wcag-audit > div {
+  min-height: 0 !important;
+}
+
+.comparison-matrix span,
+.research-table span,
+.evidence-matrix span,
+.wcag-audit span {
+  padding: 10px 12px !important;
+  font-size: var(--body-size) !important;
+  line-height: 1.35 !important;
+  min-height: 0 !important;
+}
+
+.comparison-matrix [role="columnheader"],
+.research-table [role="columnheader"],
+.evidence-matrix [role="columnheader"],
+.wcag-audit [role="columnheader"] {
+  font-size: var(--label-size) !important;
+  min-height: 0 !important;
+  padding: 8px 12px !important;
+}
+
+/* Benchmark matrix extra */
+.benchmark-matrix span {
+  padding: 10px 12px !important;
+  font-size: var(--body-size) !important;
+}
+
+.benchmark-matrix span strong {
+  font-size: var(--card-title-size) !important;
+}
+
+.benchmark-matrix span small,
+.benchmark-matrix [role="columnheader"] {
+  font-size: var(--label-size) !important;
+}
+
+.benchmark-matrix > div {
+  min-height: 0 !important;
+}
+
+/* ── 10. SLIDE 01 — COVER ────────────────────────────────────── */
+.cover-slide.active {
+  padding: var(--slide-pad-y) var(--slide-pad-x) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.cover-layout,
+.cover-slide[data-view-scale="50"] .cover-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) !important;
+  gap: 32px !important;
+  height: 100% !important;
+  align-items: center !important;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.cover-copy {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.cover-copy h1 {
+  font-size: clamp(28px, 3.2vw, 52px) !important;
+  line-height: .98 !important;
+}
+
+.cover-copy .lead {
+  font-size: var(--body-size) !important;
+  margin-top: 10px !important;
+  line-height: 1.45 !important;
+}
+
+.cover-meta {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 8px !important;
+  margin-top: 14px !important;
+}
+
+.cover-meta article {
+  min-height: 0 !important;
+  padding: 12px 14px !important;
+}
+
+.cover-meta span {
+  font-size: var(--label-size) !important;
+  margin-bottom: 4px !important;
+}
+
+.cover-meta strong {
+  font-size: var(--body-size) !important;
+  line-height: 1.25 !important;
+}
+
+.cover-visual,
+.cover-slide[data-view-scale="50"] .cover-visual {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: calc(100vh - var(--slide-inset) * 2 - var(--control-height) - var(--slide-pad-y) * 2) !important;
+}
+
+.cover-visual img {
+  object-fit: cover !important;
+  object-position: left top !important;
+}
+
+.cover-visual figcaption {
+  padding: 14px 16px !important;
+  gap: 6px !important;
+}
+
+.cover-visual figcaption span {
+  font-size: var(--label-size) !important;
+}
+
+.cover-visual figcaption strong {
+  font-size: var(--card-title-size) !important;
+  line-height: 1.18 !important;
+}
+
+.cover-visual figcaption p {
+  font-size: var(--body-size) !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+}
+
+/* ── 11. SLIDE 02 — PROJECT CONTEXT two-col ──────────────────── */
+.slide[data-title="Project Context"].active {
+  gap: var(--content-gap) !important;
+  padding-top: var(--slide-pad-y) !important;
+  justify-content: flex-start !important;
+}
+
+.slide[data-title="Project Context"] .slide-grid.two-col {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr) !important;
+  gap: 16px !important;
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+}
+
+.slide[data-title="Project Context"] .coverage-map {
+  min-height: 0 !important;
+  gap: 8px !important;
+}
+
+.slide[data-title="Project Context"] .coverage-map div,
+.slide[data-title="Project Context"] .coverage-map span {
+  min-height: 0 !important;
+  padding: 10px 12px !important;
+  font-size: var(--body-size) !important;
+}
+
+.slide[data-title="Project Context"] .coverage-map .coverage-core {
+  font-size: clamp(16px, 1.5vw, 22px) !important;
+  min-height: 0 !important;
+  padding: 14px !important;
+}
+
+.slide[data-title="Project Context"] .problem-stack {
+  margin-top: 10px !important;
+  gap: 8px !important;
+}
+
+.slide[data-title="Project Context"] .executive-summary {
+  flex: 0 0 auto !important;
+  margin-top: 0 !important;
+  padding: 12px 16px !important;
+}
+
+.slide[data-title="Project Context"] .metric-row {
+  flex: 0 0 auto !important;
+  margin-top: 0 !important;
+  gap: 8px !important;
+}
+
+/* ── 12. SLIDE 05 — JOURNEYS ─────────────────────────────────── */
+.slide[data-title="Journeys"] .journey-map {
+  grid-template-rows: minmax(36px, .36fr) repeat(4, minmax(52px, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+/* ── 13. SLIDE 09 — WIREFRAMES carousel height ───────────────── */
+.wireframe-carousel {
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+.wireframe-screen {
+  min-height: 0 !important;
+}
+
+/* ── 14. SLIDE 10 — STYLE GUIDE: palette cards don't word-wrap ─ */
+.style-guide-slide.active {
+  gap: var(--content-gap) !important;
+  padding-top: var(--slide-pad-y) !important;
+  justify-content: flex-start !important;
+}
+
+.style-guide-board {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+
+.palette-grid {
+  gap: var(--artifact-gap) !important;
+}
+
+.palette-grid article {
+  min-height: 0 !important;
+  padding: var(--card-pad) !important;
+  overflow: hidden !important;
+}
+
+/* ── 15. SLIDE 13 — LIVE SITE: fix text overlap ─────────────── */
+.live-site-slide.active {
+  gap: var(--content-gap) !important;
+  justify-content: flex-start !important;
+}
+
+.live-site-frame {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+
+.live-site-copy {
+  padding: 20px !important;
+}
+
+.live-site-copy strong {
+  font-size: var(--card-title-size) !important;
+}
+
+.live-site-copy p {
+  font-size: var(--body-size) !important;
+}
+
+.live-site-points b {
+  font-size: var(--body-size) !important;
+  padding: 8px 10px !important;
+}
+
+/* ── 16. SLIDE 14 — SITE ANATOMY: cards clip on right ────────── */
+.slide[data-title="Site Anatomy"].active {
+  gap: var(--content-gap) !important;
+}
+
+.slide[data-title="Site Anatomy"] .anatomy-board {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+
+.slide[data-title="Site Anatomy"] .anatomy-grid {
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+}
+
+/* ── 17. SLIDE 16 — ROADMAP: phase 4 overlapping phase 1 ─────── */
+.slide[data-title="Roadmap"].active {
+  gap: var(--content-gap) !important;
+  justify-content: flex-start !important;
+}
+
+.slide[data-title="Roadmap"] .roadmap-grid {
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+  align-items: start !important;
+}
+
+.slide[data-title="Roadmap"] .backlog-grid {
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+}
+
+/* ── 18. ALL SLIDES: per-slide active overrides reset ────────── */
+.slide[data-title="Benchmark Set"].active,
+.style-guide-slide.active,
+.slide[data-title="Walkthrough 01"].active,
+.slide[data-title="Product Wins"].active,
+.slide[data-title="Roadmap"].active,
+.slide[data-title="Accessibility"].active {
+  gap: var(--content-gap) !important;
+  padding-top: var(--slide-pad-y) !important;
+  padding-bottom: 0 !important;
+  justify-content: flex-start !important;
+}
+
+/* ── 19. COMPACT-HEAD: two-col header keeps note from squashing ─ */
+.compact-head {
+  grid-template-columns: minmax(0, 1fr) minmax(200px, .36fr) !important;
+  gap: 24px !important;
+  align-items: end !important;
+}
+
+/* ── 20. TAKEAWAY / EXECUTIVE SUMMARY bottom bars ────────────── */
+.takeaway {
+  flex: 0 0 auto !important;
+  margin-top: 0 !important;
+  padding: 12px 16px !important;
+}
+
+.executive-summary {
+  flex: 0 0 auto !important;
+  margin-top: 0 !important;
+  padding: 12px 16px !important;
+}
+
+/* ── 21. SCALE PASS RESETS (prevent cascade conflicts) ────────── */
+/* These were applied by earlier system passes and interfere above */
+.slide[data-view-scale="50"].cover-slide.active {
+  padding: var(--slide-pad-y) var(--slide-pad-x) !important;
+}
+
+.slide[data-view-scale="33"].active,
+.slide[data-view-scale="25"].active {
+  gap: var(--content-gap) !important;
+}
+
+.slide[data-view-scale="33"] h2,
+.slide[data-view-scale="25"] h2 {
+  font-size: var(--display-size) !important;
+}
+
+.slide[data-view-scale="33"] .slide-head,
+.slide[data-view-scale="25"] .slide-head {
+  padding-top: 0 !important;
+  padding-bottom: 14px !important;
+}
+
+.slide[data-view-scale="33"] .lead,
+.slide[data-view-scale="25"] .lead,
+.slide[data-view-scale="33"] .frame-note,
+.slide[data-view-scale="25"] .frame-note {
+  font-size: var(--body-size) !important;
+}
+
+/* ── PASS 3: Final size/clip corrections ─────────────────────── */
+
+/* H2 was still rendering too large on content-heavy slides.
+   Reduce the display-size clamp max from 44 to 38px. */
+:root {
+  --display-size: clamp(24px, 2.1vw, 38px);
+}
+
+/* Slide 01: cover — hide third meta card partially clipping.
+   Stack all 3 cards, slightly more compact. */
+.cover-meta {
+  grid-template-columns: 1fr !important;
+  gap: 6px !important;
+  margin-top: 12px !important;
+}
+
+/* Slide 07 / 16: bottom takeaway/decision row clips.
+   Allow the grid container to flex and let its children shrink. */
+.slide:not(.cover-slide).active > *:last-child {
+  flex-shrink: 1;
+  min-height: 0;
+}
+
+/* Roadmap and win-grid second row: reduce card padding so content fits */
+.slide[data-title="Roadmap"] .backlog-grid article,
+.slide[data-title="Product Wins"] .win-grid article {
+  padding: 12px 14px !important;
+}
+
+/* Slide 02: problem-stack cards should have less vertical space,
+   and the two-col grid should take available space without overflow */
+.slide[data-title="Project Context"] .slide-grid.two-col {
+  flex: 1 1 auto !important;
+  overflow: hidden !important;
+}
+
+/* Slide 02 lead paragraph takes too much space */
+.slide[data-title="Project Context"] .lead {
+  font-size: clamp(12px, .8vw, 15px) !important;
+  margin-top: 6px !important;
+}
+
+/* Slide 09 wireframe carousel inner content */
+.wireframe-track {
+  min-height: 0 !important;
+}
+
+.wireframe-screen.active {
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Slide 14 anatomy board: ensure the orbit diagram doesn't overflow */
+.anatomy-board {
+  overflow: hidden !important;
+  min-height: 0 !important;
+}
+
+/* Slide 10 style guide: force palette cards to fit text without overflow */
+.palette-grid article strong {
+  font-size: clamp(11px, .82vw, 15px) !important;
+  line-height: 1.2 !important;
+}
+.palette-grid article p {
+  font-size: clamp(10px, .72vw, 13px) !important;
+  line-height: 1.3 !important;
+}
+
+/* Slide 13 live site: fix text overlap on right panel */
+.live-site-copy .live-site-points {
+  gap: 6px !important;
+}
+
+/* Global: takeaway and executive-summary should never push content out */
+.takeaway, .executive-summary {
+  flex: 0 0 auto !important;
+  overflow: hidden !important;
+}
+
+/* ── COVER SLIDE FINAL FIX: shrink h1 + meta cards to prevent clip ── */
+.cover-copy h1 {
+  font-size: clamp(24px, 2.6vw, 40px) !important;
+  line-height: .96 !important;
+}
+
+.cover-meta {
+  grid-template-columns: 1fr !important;
+  gap: 5px !important;
+  margin-top: 10px !important;
+}
+
+.cover-meta article {
+  min-height: 0 !important;
+  padding: 9px 12px !important;
+}
+
+.cover-meta span {
+  font-size: 10px !important;
+  margin-bottom: 2px !important;
+}
+
+.cover-meta strong {
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+}
+
+.cover-copy .lead {
+  font-size: 13px !important;
+  margin-top: 8px !important;
+  line-height: 1.4 !important;
+}
+
+/* Cover: h1 needs to be smaller so all 3 meta cards are fully visible */
+.cover-copy h1 {
+  font-size: clamp(22px, 2.2vw, 34px) !important;
+}
+
+/* Cover fix: clip left column so the layout never overflows the frame */
+.cover-copy {
+  overflow: hidden !important;
+  max-height: 100% !important;
+}
+
+/* The cover layout fills full height of the slide */
+.cover-slide.active .cover-layout {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+/* Cover: switch meta cards to a horizontal row so they fit in the remaining space */
+.cover-meta {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  margin-top: 10px !important;
+}
+
+.cover-meta article {
+  padding: 10px 12px !important;
+  min-height: 0 !important;
+}
+
+/* Revert to stacked layout for meta cards — horizontal was too narrow */
+.cover-meta {
+  grid-template-columns: 1fr !important;
+  gap: 6px !important;
+}
+
+/* Shrink h1 line-height drastically so it takes less vertical space */
+h1, .cover-copy h1 {
+  line-height: .82 !important;
+}
+
+/* Shrink the h1 on cover specifically */
+.cover-slide .cover-copy h1,
+.cover-copy h1 {
+  font-size: clamp(20px, 2.8vw, 42px) !important;
+  line-height: .82 !important;
+}
+
+/* Final cover nudge: tighten lead text and meta gap slightly more */
+.cover-copy .lead {
+  margin-top: 5px !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+.cover-meta {
+  margin-top: 6px !important;
+  gap: 5px !important;
+}
+.cover-meta article {
+  padding: 8px 11px !important;
+}
+
+/* ================================================================
+   TARGETED SLIDE FIXES — per-slide layout corrections
+   ================================================================ */
+
+/* ── SLIDE 02: Move coverage-map lower, show all 6 labels ─────── */
+[data-title="Project Context"] .slide-grid.two-col {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr) !important;
+  gap: 24px !important;
+  align-items: start !important;
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+}
+
+[data-title="Project Context"] .coverage-map {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  margin-top: 48px !important; /* push down so it sits lower */
+  min-height: 0 !important;
+}
+
+[data-title="Project Context"] .coverage-core {
+  grid-column: 1 / -1 !important;
+  padding: 12px 16px !important;
+  font-size: 15px !important;
+  text-align: center !important;
+  min-height: 0 !important;
+}
+
+[data-title="Project Context"] .coverage-map > span {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 10px 8px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  min-height: 40px !important;
+  text-align: center !important;
+}
+
+[data-title="Project Context"] .problem-stack {
+  gap: 7px !important;
+  margin-top: 10px !important;
+}
+
+[data-title="Project Context"] .problem-stack article {
+  padding: 10px 13px !important;
+  min-height: 0 !important;
+}
+
+[data-title="Project Context"] .executive-summary {
+  padding: 11px 16px !important;
+  flex: 0 0 auto !important;
+  margin-top: 0 !important;
+}
+
+[data-title="Project Context"] .metric-row {
+  gap: 8px !important;
+  flex: 0 0 auto !important;
+}
+
+[data-title="Project Context"] .metric-row article {
+  padding: 10px 13px !important;
+  min-height: 0 !important;
+}
+
+/* ── SLIDE 04: Taller blue insight cards, level headers, fix table ─ */
+[data-title="Key Insights"] .slide-grid,
+[data-title="Key Insights"] .decision-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+
+[data-title="Key Insights"] .slide-grid > article,
+[data-title="Key Insights"] .decision-grid > article {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 200px !important;
+  padding: 18px 18px !important;
+}
+
+[data-title="Key Insights"] .slide-grid > article > span,
+[data-title="Key Insights"] .decision-grid > article > span {
+  font-size: var(--label-size) !important;
+  margin-bottom: 10px !important;
+}
+
+[data-title="Key Insights"] .slide-grid > article > strong,
+[data-title="Key Insights"] .decision-grid > article > strong {
+  font-size: clamp(15px, 1.15vw, 20px) !important;
+  line-height: 1.18 !important;
+  flex: 1 !important;
+  align-self: flex-start !important;
+}
+
+[data-title="Key Insights"] .slide-grid > article > p,
+[data-title="Key Insights"] .decision-grid > article > p {
+  font-size: 13px !important;
+  margin-top: auto !important;
+  padding-top: 10px !important;
+}
+
+/* Research table below the 4 cards — compact column headers */
+[data-title="Key Insights"] .research-table,
+[data-title="Key Insights"] .evidence-matrix {
+  font-size: 12px !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+[data-title="Key Insights"] .research-table [role="columnheader"],
+[data-title="Key Insights"] .evidence-matrix [role="columnheader"] {
+  padding: 7px 10px !important;
+  font-size: 11px !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+[data-title="Key Insights"] .research-table span,
+[data-title="Key Insights"] .evidence-matrix span {
+  padding: 8px 10px !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+
+/* ── SLIDE 07: Level headers, taller decision cards ───────────── */
+[data-title="Design Decisions"] .decision-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+  align-items: stretch !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+[data-title="Design Decisions"] .decision-grid > article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 20px 20px !important;
+  min-height: 0 !important;
+}
+
+[data-title="Design Decisions"] .decision-grid > article > span {
+  font-size: 11px !important;
+  letter-spacing: .08em !important;
+  margin-bottom: 10px !important;
+  display: block !important;
+}
+
+/* Level the card titles (h3/strong) to same baseline */
+[data-title="Design Decisions"] .decision-grid > article > strong,
+[data-title="Design Decisions"] .decision-grid > article > h3 {
+  font-size: clamp(16px, 1.2vw, 21px) !important;
+  line-height: 1.18 !important;
+  min-height: 52px !important; /* equal height forces visual alignment */
+  display: flex !important;
+  align-items: flex-start !important;
+  margin-bottom: 14px !important;
+}
+
+[data-title="Design Decisions"] .decision-grid > article > p {
+  font-size: 13px !important;
+  line-height: 1.42 !important;
+  margin-top: 6px !important;
+}
+
+[data-title="Design Decisions"] .takeaway {
+  flex: 0 0 auto !important;
+  padding: 12px 16px !important;
+}
+
+/* ── SLIDE 08: Taller step/principle boxes ────────────────────── */
+[data-title="GIS Strategy"] .gis-flow {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+
+[data-title="GIS Strategy"] .gis-flow article {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  min-height: 130px !important;
+  padding: 18px 14px !important;
+  text-align: center !important;
+}
+
+[data-title="GIS Strategy"] .gis-flow article strong {
+  font-size: clamp(14px, 1.05vw, 18px) !important;
+  line-height: 1.2 !important;
+  margin-top: 10px !important;
+}
+
+[data-title="GIS Strategy"] .gis-strategy-grid {
+  gap: 12px !important;
+  align-items: stretch !important;
+}
+
+[data-title="GIS Strategy"] .gis-strategy-grid article {
+  min-height: 0 !important;
+  padding: 16px 16px !important;
+}
+
+[data-title="GIS Strategy"] .takeaway {
+  flex: 0 0 auto !important;
+  padding: 12px 16px !important;
+}
+
+/* ── SLIDE 09: Taller wireframe carousel ──────────────────────── */
+[data-title="Wireframes"] .wireframe-carousel {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+[data-title="Wireframes"] .wireframe-track {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+
+[data-title="Wireframes"] .wireframe-screen {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+[data-title="Wireframes"] .wireframe-screen.active {
+  display: grid !important;
+  height: 100% !important;
+}
+
+/* ── SLIDE 10: Fix fonts table (narrower), expand color boxes ──── */
+/* Fonts table — natural width, not stretched */
+[data-title="Style Guide"] .type-scale {
+  min-height: 0 !important;
+}
+
+[data-title="Style Guide"] .type-scale > div {
+  min-height: 0 !important;
+  padding: 8px 12px !important;
+}
+
+[data-title="Style Guide"] .type-scale span {
+  font-size: 13px !important;
+  padding: 8px 12px !important;
+  min-height: 0 !important;
+}
+
+/* Palette cards — wider, descriptive text fits without wrapping */
+[data-title="Style Guide"] .palette-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  align-items: stretch !important;
+}
+
+[data-title="Style Guide"] .palette-grid article {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 160px !important;
+  padding: 14px 16px !important;
+  overflow: visible !important;
+}
+
+[data-title="Style Guide"] .palette-grid article .swatch {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 6px !important;
+  flex: 0 0 auto !important;
+}
+
+[data-title="Style Guide"] .palette-grid article strong {
+  font-size: 15px !important;
+  line-height: 1.2 !important;
+  margin-top: 8px !important;
+}
+
+[data-title="Style Guide"] .palette-grid article small,
+[data-title="Style Guide"] .palette-grid article .hex {
+  font-size: 12px !important;
+  margin-top: 3px !important;
+}
+
+[data-title="Style Guide"] .palette-grid article p {
+  font-size: 12px !important;
+  line-height: 1.38 !important;
+  margin-top: 6px !important;
+}
+
+/* Contrast checks section — more space */
+[data-title="Style Guide"] .contrast-checks,
+[data-title="Style Guide"] .wcag-next {
+  min-height: 0 !important;
+  padding: 12px 16px !important;
+}
+
+[data-title="Style Guide"] .contrast-checks article,
+[data-title="Style Guide"] .wcag-next article {
+  min-height: 0 !important;
+  padding: 10px 14px !important;
+}
+
+/* ── SLIDE 14: Align anatomy grid, fit all 6 module cards ─────── */
+[data-title="Site Anatomy"] .anatomy-board {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr) !important;
+  gap: 16px !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+  align-items: start !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-diagram {
+  min-height: 0 !important;
+  height: 100% !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 8px !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 11px 13px !important;
+  min-height: 0 !important;
+  gap: 4px !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid article > span {
+  font-size: 10px !important;
+  letter-spacing: .06em !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid article > strong {
+  font-size: 14px !important;
+  line-height: 1.15 !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid article > p {
+  font-size: 11.5px !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
+}
+
+/* ── SLIDE 17: Push content below header, more breathing room ──── */
+[data-title="Accessibility"].active {
+  padding-top: calc(var(--slide-pad-y) + 8px) !important;
+  gap: 18px !important;
+  justify-content: flex-start !important;
+}
+
+[data-title="Accessibility"] .slide-head {
+  margin-bottom: 18px !important;
+}
+
+[data-title="Accessibility"] .wcag-principles {
+  gap: 12px !important;
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+  align-items: stretch !important;
+}
+
+[data-title="Accessibility"] .wcag-principles article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 16px 16px !important;
+  min-height: 160px !important;
+}
+
+[data-title="Accessibility"] .wcag-principles article strong {
+  font-size: clamp(14px, 1.1vw, 18px) !important;
+  line-height: 1.2 !important;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+[data-title="Accessibility"] .wcag-principles article p {
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+}
+
+[data-title="Accessibility"] .wcag-audit {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  font-size: 12px !important;
+}
+
+[data-title="Accessibility"] .wcag-audit [role="columnheader"] {
+  padding: 7px 10px !important;
+  font-size: 11px !important;
+}
+
+[data-title="Accessibility"] .wcag-audit span {
+  padding: 8px 10px !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+
+/* ── SLIDE 18: Move metrics down, no overlap with heading ─────── */
+[data-title="Outcomes"].active {
+  gap: 16px !important;
+  padding-top: calc(var(--slide-pad-y) + 4px) !important;
+  justify-content: flex-start !important;
+}
+
+[data-title="Outcomes"] .slide-head {
+  margin-bottom: 16px !important;
+}
+
+[data-title="Outcomes"] .outcome-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+}
+
+[data-title="Outcomes"] .outcome-grid article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 16px 16px !important;
+  min-height: 140px !important;
+}
+
+[data-title="Outcomes"] .outcome-grid article strong {
+  font-size: clamp(14px, 1.1vw, 18px) !important;
+  line-height: 1.2 !important;
+  flex: 1 !important;
+}
+
+[data-title="Outcomes"] .outcome-grid article span {
+  font-size: 11px !important;
+  letter-spacing: .06em !important;
+  margin-bottom: 8px !important;
+}
+
+[data-title="Outcomes"] .outcome-grid article p {
+  font-size: 12.5px !important;
+  margin-top: 6px !important;
+}
+
+[data-title="Outcomes"] .metric-row {
+  flex: 0 0 auto !important;
+  gap: 10px !important;
+}
+
+[data-title="Outcomes"] .metric-row article {
+  padding: 12px 14px !important;
+  min-height: 0 !important;
+}
+
+[data-title="Outcomes"] .validation-loop {
+  flex: 0 0 auto !important;
+  padding: 13px 16px !important;
+}
+
+/* ── SLIDE 19: Expand boxes, push content down, panel close fits ─ */
+[data-title="PG&E Transfer"].active {
+  gap: 14px !important;
+  padding-top: calc(var(--slide-pad-y) + 6px) !important;
+  justify-content: flex-start !important;
+}
+
+[data-title="PG&E Transfer"] .slide-head {
+  margin-bottom: 14px !important;
+}
+
+[data-title="PG&E Transfer"] .transfer-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  align-items: stretch !important;
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+}
+
+[data-title="PG&E Transfer"] .transfer-grid article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 14px 14px !important;
+  min-height: 130px !important;
+}
+
+[data-title="PG&E Transfer"] .transfer-grid article > span {
+  font-size: 10px !important;
+  letter-spacing: .07em !important;
+  margin-bottom: 6px !important;
+}
+
+[data-title="PG&E Transfer"] .transfer-grid article > strong {
+  font-size: clamp(13px, 1.0vw, 17px) !important;
+  line-height: 1.2 !important;
+  margin-bottom: 6px !important;
+}
+
+[data-title="PG&E Transfer"] .transfer-grid article > p {
+  font-size: 12px !important;
+  line-height: 1.38 !important;
+  margin: 0 !important;
+}
+
+/* Guardrail row below carry-over cards */
+[data-title="PG&E Transfer"] .source-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+[data-title="PG&E Transfer"] .source-grid article,
+[data-title="PG&E Transfer"] .source-grid a {
+  padding: 13px 14px !important;
+  min-height: 0 !important;
+}
+
+/* Panel close — pinned to bottom, fully visible */
+[data-title="PG&E Transfer"] .panel-close,
+[data-title="PG&E Transfer"] .takeaway {
+  flex: 0 0 auto !important;
+  padding: 13px 16px !important;
+  margin-top: 0 !important;
+}
+
+/* Slide 14 anatomy grid: wider right panel, grid column layout for cards */
+[data-title="Site Anatomy"] .anatomy-board {
+  grid-template-columns: minmax(0, 1.2fr) minmax(200px, .8fr) !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(3, auto) !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid article > strong {
+  font-size: 13px !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid article > p {
+  font-size: 11px !important;
+}
+
+/* Slide 14: give right panel more room, use 2-col card grid */
+[data-title="Site Anatomy"] .anatomy-board {
+  grid-template-columns: minmax(0, 1fr) minmax(340px, .55fr) !important;
+}
+
+/* Slide 14: fix card text wrapping — 2-col grid gives each card enough width */
+[data-title="Site Anatomy"] .anatomy-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  overflow-y: auto !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid article > strong {
+  font-size: 13px !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+/* Slide 14 FINAL: single-column anatomy grid with compact cards */
+[data-title="Site Anatomy"] .anatomy-board {
+  grid-template-columns: minmax(0, 1fr) 310px !important;
+  align-items: start !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid {
+  grid-template-columns: 1fr !important;
+  gap: 5px !important;
+  overflow-y: hidden !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid article {
+  padding: 8px 11px !important;
+  gap: 2px !important;
+  display: grid !important;
+  grid-template-columns: 52px minmax(0, 1fr) !important;
+  grid-template-rows: auto auto !important;
+  align-items: start !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid article > span {
+  font-size: 9px !important;
+  letter-spacing: .06em !important;
+  grid-row: 1 !important;
+  grid-column: 1 !important;
+  align-self: center !important;
+  color: var(--gold, #d4a84b) !important;
+  text-transform: uppercase !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid article > strong {
+  font-size: 13px !important;
+  line-height: 1.15 !important;
+  grid-row: 1 !important;
+  grid-column: 2 !important;
+  word-break: normal !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-grid article > p {
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  grid-row: 2 !important;
+  grid-column: 2 !important;
+  margin: 0 !important;
+  color: rgba(255,255,255,.65) !important;
+}
+
+/* FINAL anatomy-grid override — beats all earlier !important rules */
+[data-title="Site Anatomy"] .anatomy-board {
+  grid-template-columns: minmax(0, 1fr) 320px !important;
+  min-height: 0 !important;
+  gap: 16px !important;
+  align-items: start !important;
+}
+[data-title="Site Anatomy"] .anatomy-board .anatomy-grid,
+[data-title="Site Anatomy"] .anatomy-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 5px !important;
+  min-height: 0 !important;
+}
+[data-title="Site Anatomy"] .anatomy-board .anatomy-grid article,
+[data-title="Site Anatomy"] .anatomy-grid article {
+  display: grid !important;
+  grid-template-columns: 56px minmax(0, 1fr) !important;
+  grid-template-rows: auto auto !important;
+  padding: 9px 10px !important;
+  gap: 0 8px !important;
+  min-height: 0 !important;
+}
+[data-title="Site Anatomy"] .anatomy-board .anatomy-grid article > span,
+[data-title="Site Anatomy"] .anatomy-grid article > span {
+  font-size: 9px !important;
+  grid-row: 1 !important;
+  grid-column: 1 !important;
+  text-transform: uppercase !important;
+  letter-spacing: .05em !important;
+  line-height: 1.8 !important;
+  color: #d4a84b !important;
+}
+[data-title="Site Anatomy"] .anatomy-board .anatomy-grid strong,
+[data-title="Site Anatomy"] .anatomy-grid article > strong {
+  font-size: 13px !important;
+  line-height: 1.15 !important;
+  grid-row: 1 !important;
+  grid-column: 2 !important;
+  align-self: center !important;
+}
+[data-title="Site Anatomy"] .anatomy-board .anatomy-grid p,
+[data-title="Site Anatomy"] .anatomy-grid article > p {
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  grid-row: 2 !important;
+  grid-column: 2 !important;
+  margin: 2px 0 0 !important;
+  color: rgba(255,255,255,.6) !important;
+}
+
+/* ================================================================
+   REVERT + FIX PASS
+   ================================================================ */
+
+/* ── SLIDE 4: Loosen heading weight + fix narrow table columns ── */
+[data-title="Key Insights"] .slide-head h2,
+[data-title="Key Insights"] h2 {
+  font-weight: 600 !important;          /* less heavy, like slide 12 */
+  letter-spacing: -.01em !important;
+}
+
+/* Research matrix — give each column enough room, no word-break */
+[data-title="Key Insights"] .research-layout,
+[data-title="Key Insights"] .evidence-matrix {
+  grid-template-columns: minmax(180px, 1.4fr) repeat(4, minmax(100px, 1fr)) !important;
+  overflow-x: hidden !important;
+}
+
+[data-title="Key Insights"] .research-table,
+[data-title="Key Insights"] .evidence-matrix {
+  grid-template-columns: minmax(180px, 1.4fr) repeat(4, minmax(100px, 1fr)) !important;
+}
+
+[data-title="Key Insights"] .research-table [role="columnheader"],
+[data-title="Key Insights"] .evidence-matrix [role="columnheader"] {
+  word-break: normal !important;
+  white-space: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  font-size: 11px !important;
+  padding: 8px 10px !important;
+  line-height: 1.3 !important;
+}
+
+[data-title="Key Insights"] .research-table span,
+[data-title="Key Insights"] .evidence-matrix span {
+  font-size: 12px !important;
+  padding: 8px 10px !important;
+  word-break: normal !important;
+}
+
+/* ── SLIDE 9: Taller wireframe content area ───────────────────── */
+[data-title="Wireframes"] .wireframe-carousel {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+[data-title="Wireframes"] .wireframe-track,
+[data-title="Wireframes"] .wireframe-screen,
+[data-title="Wireframes"] .wireframe-screen.active {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+[data-title="Wireframes"] .wireframe-screen.active {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 12px !important;
+  padding: 16px !important;
+}
+
+/* ── SLIDES 13 & 14: Full revert of targeted overrides ────────── */
+
+/* Slide 13 — remove the live-site-copy overrides causing overlap */
+[data-title="Live Site"] .live-site-frame {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 16px !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+[data-title="Live Site"] .live-site-copy {
+  padding: 20px 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  overflow: hidden !important;
+}
+
+/* The numbered steps on slide 13 — fix text overlap */
+[data-title="Live Site"] .live-site-points {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+[data-title="Live Site"] .live-site-points > div,
+[data-title="Live Site"] .live-site-points > article {
+  display: grid !important;
+  grid-template-columns: 44px minmax(0, 1fr) !important;
+  gap: 10px !important;
+  align-items: start !important;
+  min-height: 0 !important;
+}
+
+[data-title="Live Site"] .live-site-points b,
+[data-title="Live Site"] .live-site-points strong {
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+  padding: 0 !important;
+}
+
+/* Slide 14 — restore original anatomy layout (full-width two-column board) */
+[data-title="Site Anatomy"].active {
+  gap: var(--content-gap) !important;
+  justify-content: flex-start !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-board {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 320px !important;
+  gap: 16px !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+  align-items: start !important;
+}
+
+[data-title="Site Anatomy"] .anatomy-map-visual {
+  min-height: 0 !important;
+  height: 100% !important;
+}
+
+/* ── SLIDE 4: evidence-matrix is 4 cols (no row-header col) ───── */
+.evidence-matrix {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+.evidence-matrix [role="row"] {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  min-height: 0 !important;
+}
+.evidence-matrix [role="columnheader"] {
+  font-size: 11px !important;
+  padding: 8px 10px !important;
+  word-break: normal !important;
+  white-space: normal !important;
+  hyphens: none !important;
+  line-height: 1.3 !important;
+  min-height: 0 !important;
+}
+.evidence-matrix [role="cell"],
+.evidence-matrix span:not([role="columnheader"]) {
+  font-size: 12px !important;
+  padding: 8px 10px !important;
+  line-height: 1.38 !important;
+  min-height: 0 !important;
+  word-break: normal !important;
+}
+
+/* ── SLIDE 13: fix step number / text overlap ─────────────────── */
+/* The walkthrough points use a numbered list structure */
+[data-title="Live Site"] .walkthrough-point,
+[data-title="Live Site"] .site-point,
+[data-title="Live Site"] .live-site-point {
+  display: grid !important;
+  grid-template-columns: 40px minmax(0, 1fr) !important;
+  gap: 8px !important;
+  align-items: start !important;
+  min-height: 0 !important;
+}
+
+/* Numbered badge */
+[data-title="Live Site"] .point-num,
+[data-title="Live Site"] .step-num,
+[data-title="Live Site"] [class*="num"] {
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 13px !important;
+  flex: 0 0 32px !important;
+}
+
+/* ── REVERT slides 15, 16, 20, 21 to original natural layout ──── */
+
+/* Slide 15 — remove win-grid overrides, restore natural flow */
+[data-title="Product Wins"] .win-grid {
+  all: revert !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+[data-title="Product Wins"] .win-grid article {
+  all: revert !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+[data-title="Product Wins"] .impact-chain {
+  all: revert !important;
+  min-height: 0 !important;
+  gap: var(--artifact-gap) !important;
+}
+[data-title="Product Wins"] .impact-chain article {
+  min-height: 0 !important;
+  padding: var(--card-pad) !important;
+}
+[data-title="Product Wins"].active {
+  gap: var(--content-gap) !important;
+  justify-content: flex-start !important;
+}
+
+/* Slide 16 — remove roadmap overrides, restore natural flow */
+[data-title="Roadmap"] .roadmap-grid {
+  all: revert !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+  align-items: stretch !important;
+  min-height: 0 !important;
+}
+[data-title="Roadmap"] .roadmap-grid article {
+  all: revert !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+[data-title="Roadmap"] .backlog-grid {
+  all: revert !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+  align-items: stretch !important;
+  min-height: 0 !important;
+}
+[data-title="Roadmap"] .backlog-grid article {
+  all: revert !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+[data-title="Roadmap"].active {
+  gap: var(--content-gap) !important;
+  justify-content: flex-start !important;
+}
+
+/* Slide 20 — remove research-instrument overrides */
+[data-title="Appendix Research"] .research-instrument,
+[data-title="Appendix Research"] .question-board,
+[data-title="Appendix Research"] .appendix-grid {
+  all: revert !important;
+  min-height: 0 !important;
+  gap: var(--artifact-gap) !important;
+}
+[data-title="Appendix Research"] .research-instrument article,
+[data-title="Appendix Research"] .question-board article,
+[data-title="Appendix Research"] .appendix-grid article {
+  all: revert !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+[data-title="Appendix Research"].active {
+  gap: var(--content-gap) !important;
+  justify-content: flex-start !important;
+}
+
+/* Slide 21 — remove source-grid overrides */
+[data-title="Appendix Benchmark"] .source-grid,
+[data-title="Appendix Benchmark"] .appendix-grid {
+  all: revert !important;
+  min-height: 0 !important;
+  gap: var(--artifact-gap) !important;
+}
+[data-title="Appendix Benchmark"] .source-grid article,
+[data-title="Appendix Benchmark"] .appendix-grid article,
+[data-title="Appendix Benchmark"] .source-grid a {
+  all: revert !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+[data-title="Appendix Benchmark"].active {
+  gap: var(--content-gap) !important;
+  justify-content: flex-start !important;
+}
+
+/* ── Undo the all:revert damage, restore grid layouts ─────────── */
+
+[data-title="Product Wins"] .impact-chain {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+[data-title="Product Wins"] .impact-chain article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+[data-title="Product Wins"] .win-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+[data-title="Product Wins"] .win-grid article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+
+[data-title="Roadmap"] .roadmap-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+  align-items: stretch !important;
+  min-height: 0 !important;
+}
+[data-title="Roadmap"] .roadmap-grid article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+[data-title="Roadmap"] .backlog-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+  align-items: stretch !important;
+  min-height: 0 !important;
+}
+[data-title="Roadmap"] .backlog-grid article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+
+/* Slides 20 + 21 — restore their original column grids */
+[data-title="Appendix Research"] .research-instrument {
+  display: grid !important;
+  gap: var(--artifact-gap) !important;
+  min-height: 0 !important;
+}
+[data-title="Appendix Research"] .question-board {
+  display: grid !important;
+  gap: var(--artifact-gap) !important;
+  min-height: 0 !important;
+}
+[data-title="Appendix Research"] .research-instrument article,
+[data-title="Appendix Research"] .question-board article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+
+[data-title="Appendix Benchmark"] .source-grid {
+  display: grid !important;
+  gap: var(--artifact-gap) !important;
+  min-height: 0 !important;
+}
+[data-title="Appendix Benchmark"] .source-grid article,
+[data-title="Appendix Benchmark"] .source-grid a {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+
+/* ── Slides 20 & 21: restore correct grid structures ─────────── */
+
+/* Slide 20: 4 top cards + 2-col survey grid below */
+[data-title="Appendix Research"] .research-instrument {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+[data-title="Appendix Research"] .research-instrument article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+[data-title="Appendix Research"] .appendix-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+[data-title="Appendix Research"] .appendix-grid article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+}
+
+/* Slide 21: 3-col source link grid */
+[data-title="Appendix Sources"] .source-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: var(--artifact-gap) !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+[data-title="Appendix Sources"] .source-grid a {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: var(--card-pad) !important;
+  min-height: 0 !important;
+  text-decoration: none !important;
+}
+
+/* ================================================================
+   FINAL TODO FIXES
+   ================================================================ */
+
+/* ── SLIDE 2: push coverage map lower ────────────────────────── */
+[data-title="Project Context"] .coverage-map {
+  margin-top: 60px !important;
+}
+
+/* ── SLIDE 4: taller blue cards + fix narrow table columns ────── */
+[data-title="Key Insights"] .slide-grid > article {
+  min-height: 220px !important;
+  justify-content: space-between !important;
+}
+/* Fix the evidence-matrix — it only has 4 cols, not 5 */
+[data-title="Key Insights"] .evidence-matrix {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+}
+[data-title="Key Insights"] .evidence-matrix > div {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+[data-title="Key Insights"] .evidence-matrix [role="columnheader"] {
+  font-size: 11px !important;
+  padding: 8px 10px !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+  line-height: 1.3 !important;
+}
+[data-title="Key Insights"] .evidence-matrix [role="cell"],
+[data-title="Key Insights"] .evidence-matrix span:not([role="columnheader"]) {
+  font-size: 12px !important;
+  padding: 8px 10px !important;
+}
+
+/* ── SLIDE 7: level headers + taller cards ────────────────────── */
+[data-title="Design Decisions"] .decision-grid {
+  align-items: stretch !important;
+  flex: 1 1 auto !important;
+}
+[data-title="Design Decisions"] .decision-grid > article {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 380px !important;
+}
+[data-title="Design Decisions"] .decision-grid > article > strong {
+  min-height: 56px !important;
+  display: flex !important;
+  align-items: flex-start !important;
+}
+
+/* ── SLIDE 8: taller step boxes + GIS principle visible ──────── */
+[data-title="GIS Strategy"] .gis-flow {
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+}
+[data-title="GIS Strategy"] .gis-flow article {
+  min-height: 140px !important;
+  justify-content: center !important;
+}
+[data-title="GIS Strategy"] .gis-strategy-grid {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+[data-title="GIS Strategy"] .gis-strategy-grid article {
+  min-height: 0 !important;
+}
+[data-title="GIS Strategy"] .takeaway {
+  flex: 0 0 auto !important;
+}
+
+/* ── SLIDE 9: increase wireframe carousel height ─────────────── */
+[data-title="Wireframes"] .slide-head {
+  flex: 0 0 auto !important;
+}
+[data-title="Wireframes"] .wireframe-carousel {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+[data-title="Wireframes"] .wireframe-nav {
+  flex: 0 0 auto !important;
+}
+[data-title="Wireframes"] .wireframe-track {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  position: relative !important;
+}
+[data-title="Wireframes"] .wireframe-screen {
+  position: absolute !important;
+  inset: 0 !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+[data-title="Wireframes"] .wireframe-screen.active {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  padding: 16px !important;
+}
+
+/* ── SLIDE 10: fonts table natural width, color boxes taller ──── */
+/* Fonts table — compact rows */
+[data-title="Style Guide"] .type-scale,
+[data-title="Style Guide"] .font-scale {
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+}
+[data-title="Style Guide"] .type-scale > div,
+[data-title="Style Guide"] .font-scale > div {
+  padding: 7px 12px !important;
+  min-height: 0 !important;
+}
+/* Color palette cards — taller so text fits */
+[data-title="Style Guide"] .palette-grid article {
+  min-height: 180px !important;
+}
+/* Contrast checks + should-not sections — more height */
+[data-title="Style Guide"] .contrast-checks,
+[data-title="Style Guide"] .do-not-list,
+[data-title="Style Guide"] .wcag-next {
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+}
+[data-title="Style Guide"] .contrast-checks article,
+[data-title="Style Guide"] .wcag-next article {
+  min-height: 60px !important;
+  padding: 12px 14px !important;
+}
+
+/* ── SLIDE 14: all 6 anatomy cards aligned + visible ─────────── */
+[data-title="Site Anatomy"] .anatomy-board {
+  grid-template-columns: minmax(0, 1fr) 340px !important;
+}
+[data-title="Site Anatomy"] .anatomy-grid {
+  grid-template-columns: 1fr !important;
+  gap: 6px !important;
+}
+[data-title="Site Anatomy"] .anatomy-grid article {
+  display: grid !important;
+  grid-template-columns: 64px minmax(0, 1fr) !important;
+  grid-template-rows: auto auto !important;
+  padding: 10px 12px !important;
+  gap: 0 10px !important;
+  min-height: 0 !important;
+}
+[data-title="Site Anatomy"] .anatomy-grid article > span {
+  grid-column: 1 !important; grid-row: 1 !important;
+  font-size: 9px !important; text-transform: uppercase !important;
+  letter-spacing: .06em !important; color: #d4a84b !important;
+  align-self: center !important;
+}
+[data-title="Site Anatomy"] .anatomy-grid article > strong {
+  grid-column: 2 !important; grid-row: 1 !important;
+  font-size: 13px !important; line-height: 1.2 !important;
+  align-self: center !important;
+}
+[data-title="Site Anatomy"] .anatomy-grid article > p {
+  grid-column: 2 !important; grid-row: 2 !important;
+  font-size: 11px !important; line-height: 1.3 !important;
+  margin: 3px 0 0 !important; color: rgba(255,255,255,.6) !important;
+}
+
+/* ── SLIDE 17: push content below header, breathing room ─────── */
+[data-title="Accessibility"].active {
+  padding-top: calc(var(--slide-pad-y) + 10px) !important;
+  gap: 20px !important;
+}
+[data-title="Accessibility"] .slide-head {
+  margin-bottom: 20px !important;
+  flex: 0 0 auto !important;
+}
+[data-title="Accessibility"] .wcag-principles {
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+}
+[data-title="Accessibility"] .wcag-principles article {
+  min-height: 160px !important;
+  padding: 16px !important;
+}
+[data-title="Accessibility"] .wcag-audit {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  margin-top: 4px !important;
+}
+
+/* ── SLIDE 18: move targets down, no overlap ─────────────────── */
+[data-title="Outcomes"].active {
+  padding-top: calc(var(--slide-pad-y) + 6px) !important;
+  gap: 18px !important;
+}
+[data-title="Outcomes"] .slide-head {
+  margin-bottom: 18px !important;
+  flex: 0 0 auto !important;
+}
+[data-title="Outcomes"] .outcome-grid {
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+}
+[data-title="Outcomes"] .outcome-grid article {
+  min-height: 140px !important;
+  padding: 16px !important;
+}
+[data-title="Outcomes"] .metric-row {
+  flex: 0 0 auto !important;
+  gap: 10px !important;
+  margin-top: 0 !important;
+}
+[data-title="Outcomes"] .metric-row article {
+  min-height: 0 !important;
+  padding: 14px 16px !important;
+}
+[data-title="Outcomes"] .validation-loop {
+  flex: 0 0 auto !important;
+  padding: 14px 16px !important;
+}
+
+/* ── SLIDE 19: expand boxes down, panel close fully visible ───── */
+[data-title="PG&E Transfer"].active {
+  padding-top: calc(var(--slide-pad-y) + 4px) !important;
+  gap: 14px !important;
+}
+[data-title="PG&E Transfer"] .slide-head {
+  margin-bottom: 12px !important;
+  flex: 0 0 auto !important;
+}
+[data-title="PG&E Transfer"] .transfer-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  align-items: stretch !important;
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+}
+[data-title="PG&E Transfer"] .transfer-grid article {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 130px !important;
+  padding: 14px !important;
+}
+[data-title="PG&E Transfer"] .transfer-grid article > span {
+  font-size: 10px !important; letter-spacing: .07em !important; margin-bottom: 6px !important;
+}
+[data-title="PG&E Transfer"] .transfer-grid article > strong {
+  font-size: 14px !important; line-height: 1.2 !important; flex: 1 !important;
+}
+[data-title="PG&E Transfer"] .transfer-grid article > p {
+  font-size: 12px !important; line-height: 1.38 !important; margin: 6px 0 0 !important;
+}
+[data-title="PG&E Transfer"] .source-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+[data-title="PG&E Transfer"] .source-grid article {
+  min-height: 0 !important; padding: 13px 14px !important;
+}
+[data-title="PG&E Transfer"] .panel-close,
+[data-title="PG&E Transfer"] .takeaway {
+  flex: 0 0 auto !important;
+  padding: 14px 18px !important;
+  margin-top: 0 !important;
+}
+
+/* ================================================================
+   PRECISE TARGETED FIXES — based on visual review
+   ================================================================ */
+
+/* ── SLIDE 2: push coverage map down the right column ─────────── */
+[data-title="Project Context"] .coverage-map {
+  margin-top: 80px !important;
+}
+
+/* ── SLIDE 4: fix overflowing evidence-matrix column headers ──── */
+/* The matrix has 4 data cols + 1 row-label col = 5 total */
+[data-title="Key Insights"] .evidence-matrix {
+  font-size: 11px !important;
+  overflow: hidden !important;
+}
+/* Force each header cell to wrap naturally without overflow */
+[data-title="Key Insights"] .evidence-matrix [role="columnheader"],
+[data-title="Key Insights"] .evidence-matrix th {
+  font-size: 10px !important;
+  padding: 6px 8px !important;
+  line-height: 1.3 !important;
+  word-break: normal !important;
+  white-space: normal !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 0 !important; /* forces cell to respect grid width */
+  min-width: 0 !important;
+}
+[data-title="Key Insights"] .evidence-matrix [role="cell"],
+[data-title="Key Insights"] .evidence-matrix td,
+[data-title="Key Insights"] .evidence-matrix span:not([role="columnheader"]) {
+  font-size: 11px !important;
+  padding: 6px 8px !important;
+  overflow: hidden !important;
+  min-width: 0 !important;
+}
+/* The blue insight cards above the table — taller */
+[data-title="Key Insights"] .slide-grid > article {
+  min-height: 230px !important;
+  overflow: hidden !important;
+}
+
+/* ── SLIDE 7: taller cards with consistent header baseline ─────── */
+[data-title="Design Decisions"] .decision-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
+  gap: 14px !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+[data-title="Design Decisions"] .decision-grid > article {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 22px 20px !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+[data-title="Design Decisions"] .decision-grid > article > span {
+  font-size: 11px !important;
+  letter-spacing: .08em !important;
+  margin-bottom: 10px !important;
+  flex: 0 0 auto !important;
+}
+/* Level all card titles to same height so content starts at same line */
+[data-title="Design Decisions"] .decision-grid > article > strong,
+[data-title="Design Decisions"] .decision-grid > article > h3 {
+  font-size: 18px !important;
+  line-height: 1.2 !important;
+  min-height: 64px !important;
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  margin-bottom: 14px !important;
+}
+[data-title="Design Decisions"] .decision-grid > article > p,
+[data-title="Design Decisions"] .decision-grid > article > div {
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  flex: 1 !important;
+}
+
+/* ── SLIDE 9: wireframe left panel — stop clipping ────────────── */
+[data-title="Wireframes"] .wireframe-screen.active {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 12px !important;
+  padding: 16px !important;
+  overflow: hidden !important;
+  height: 100% !important;
+}
+/* The first panel (the MFR mockup) — let it be visible */
+[data-title="Wireframes"] .wireframe-screen.active > *:first-child {
+  overflow: hidden !important;
+  border-radius: 8px !important;
+}
+
+/* ── SLIDE 10: show contrast checks + should-not at bottom ─────── */
+[data-title="Style Guide"].active {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  overflow: hidden !important;
+}
+[data-title="Style Guide"] .style-guide-board {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 14px !important;
+}
+/* Color palette + type scale panels each fill their half */
+[data-title="Style Guide"] .style-guide-board > section,
+[data-title="Style Guide"] .style-guide-board > div {
+  min-height: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+/* Bottom strip: contrast + should-not side by side */
+[data-title="Style Guide"] .contrast-strip,
+[data-title="Style Guide"] .do-not-strip,
+[data-title="Style Guide"] .wcag-strip {
+  flex: 0 0 auto !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 14px !important;
+}
+
+/* ── SLIDE 17: move ALL content below header with breathing room ─ */
+[data-title="Accessibility"].active {
+  padding-top: 48px !important;
+  gap: 16px !important;
+  justify-content: flex-start !important;
+}
+[data-title="Accessibility"] .slide-head {
+  flex: 0 0 auto !important;
+  margin-bottom: 16px !important;
+  padding-bottom: 12px !important;
+}
+[data-title="Accessibility"] .wcag-principles {
+  flex: 0 0 auto !important;
+  gap: 12px !important;
+  margin-top: 0 !important;
+}
+[data-title="Accessibility"] .wcag-principles article {
+  min-height: 150px !important;
+  padding: 16px !important;
+  overflow: hidden !important;
+}
+[data-title="Accessibility"] .wcag-audit {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  margin-top: 8px !important;
+}
+
+/* ── SLIDE 18: gap between first row and targets row ──────────── */
+[data-title="Outcomes"].active {
+  gap: 16px !important;
+  padding-top: 36px !important;
+  justify-content: flex-start !important;
+}
+[data-title="Outcomes"] .outcome-grid {
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+  gap: 12px !important;
+}
+[data-title="Outcomes"] .outcome-grid article {
+  min-height: 150px !important;
+  padding: 16px !important;
+  overflow: hidden !important;
+}
+[data-title="Outcomes"] .metric-row {
+  flex: 0 0 auto !important;
+  gap: 12px !important;
+  margin-top: 8px !important; /* extra breathing room below first row */
+}
+[data-title="Outcomes"] .metric-row article {
+  padding: 16px !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+[data-title="Outcomes"] .validation-loop {
+  flex: 0 0 auto !important;
+  padding: 14px 18px !important;
+  margin-top: 4px !important;
+  overflow: hidden !important;
+}
+
+/* ── SLIDE 19: even layout — 4 carry-over + 4-col guardrail row ─ */
+[data-title="PG&E Transfer"].active {
+  gap: 14px !important;
+  padding-top: 36px !important;
+  justify-content: flex-start !important;
+}
+[data-title="PG&E Transfer"] .slide-head {
+  flex: 0 0 auto !important;
+  margin-bottom: 12px !important;
+}
+/* Top row: 4 carry-over cards */
+[data-title="PG&E Transfer"] .transfer-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+  align-items: stretch !important;
+  min-height: 0 !important;
+}
+[data-title="PG&E Transfer"] .transfer-grid article {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 140px !important;
+  padding: 14px 16px !important;
+  overflow: hidden !important;
+}
+[data-title="PG&E Transfer"] .transfer-grid article > span {
+  font-size: 10px !important;
+  letter-spacing: .07em !important;
+  margin-bottom: 6px !important;
+  flex: 0 0 auto !important;
+}
+[data-title="PG&E Transfer"] .transfer-grid article > strong {
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  flex: 0 0 auto !important;
+  margin-bottom: 6px !important;
+}
+[data-title="PG&E Transfer"] .transfer-grid article > p {
+  font-size: 12px !important;
+  line-height: 1.38 !important;
+  margin: 0 !important;
+  flex: 1 !important;
+}
+/* Bottom guardrail row: force 4 columns so it aligns with carry-over */
+[data-title="PG&E Transfer"] .source-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+[data-title="PG&E Transfer"] .source-grid article,
+[data-title="PG&E Transfer"] .source-grid a {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 120px !important;
+  padding: 14px 16px !important;
+  overflow: hidden !important;
+}
+[data-title="PG&E Transfer"] .source-grid article > span,
+[data-title="PG&E Transfer"] .source-grid a > span {
+  font-size: 10px !important;
+  letter-spacing: .07em !important;
+  margin-bottom: 6px !important;
+}
+[data-title="PG&E Transfer"] .source-grid article > strong,
+[data-title="PG&E Transfer"] .source-grid a > strong {
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  margin-bottom: 6px !important;
+}
+[data-title="PG&E Transfer"] .source-grid article > p,
+[data-title="PG&E Transfer"] .source-grid a > p {
+  font-size: 12px !important;
+  line-height: 1.38 !important;
+  margin: 0 !important;
+}
+/* Panel close */
+[data-title="PG&E Transfer"] .panel-close,
+[data-title="PG&E Transfer"] .takeaway {
+  flex: 0 0 auto !important;
+  padding: 14px 18px !important;
+  overflow: hidden !important;
+}
