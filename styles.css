@@ -11872,3 +11872,245 @@ h1, .cover-copy h1 {
   font-size: clamp(22px, 2.4vw, 36px) !important;
   line-height: .92 !important;
 }
+
+/* ── SLIDE 4: fix evidence matrix — columns too narrow ─────────── */
+[data-title="Key Insights"] .evidence-matrix {
+  font-size: 11px !important;
+  overflow: visible !important;
+}
+[data-title="Key Insights"] .evidence-matrix [role="columnheader"],
+[data-title="Key Insights"] .evidence-matrix th {
+  font-size: 10px !important;
+  padding: 6px 6px !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  line-height: 1.25 !important;
+}
+[data-title="Key Insights"] .evidence-matrix [role="cell"],
+[data-title="Key Insights"] .evidence-matrix span:not([role="columnheader"]) {
+  font-size: 11px !important;
+  padding: 5px 6px !important;
+  overflow: hidden !important;
+  min-width: 0 !important;
+}
+
+/* ── SLIDE 6: benchmark table rows fit on screen ──────────────── */
+[data-title="Benchmark Set"] .benchmark-matrix,
+[data-title="Benchmark Set"] .comparison-matrix {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  font-size: 12px !important;
+}
+[data-title="Benchmark Set"] .benchmark-matrix > div,
+[data-title="Benchmark Set"] .comparison-matrix > div {
+  min-height: 0 !important;
+}
+[data-title="Benchmark Set"] .benchmark-matrix span,
+[data-title="Benchmark Set"] .comparison-matrix span {
+  padding: 8px 10px !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+[data-title="Benchmark Set"] .benchmark-matrix [role="columnheader"],
+[data-title="Benchmark Set"] .comparison-matrix [role="columnheader"] {
+  padding: 8px 10px !important;
+  font-size: 11px !important;
+}
+
+/* ── SLIDE 8: fix layer card overlap ─────────────────────────── */
+[data-title="GIS Strategy"] .gis-strategy-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(2, auto) !important;
+  gap: 10px !important;
+  align-items: start !important;
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+}
+[data-title="GIS Strategy"] .gis-strategy-grid article {
+  min-height: 0 !important;
+  padding: 14px 16px !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+[data-title="GIS Strategy"] .gis-strategy-grid article > span {
+  font-size: 10px !important;
+  letter-spacing: .07em !important;
+  margin-bottom: 6px !important;
+  display: block !important;
+}
+[data-title="GIS Strategy"] .gis-strategy-grid article > strong {
+  font-size: 15px !important;
+  line-height: 1.2 !important;
+  display: block !important;
+  margin-bottom: 6px !important;
+}
+[data-title="GIS Strategy"] .gis-strategy-grid article > p {
+  font-size: 12px !important;
+  line-height: 1.38 !important;
+  margin: 0 !important;
+}
+
+/* ── SLIDE 9: fix blank left wireframe panel ──────────────────── */
+[data-title="Wireframes"] .wireframe-screen.active {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  padding: 12px !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  align-items: stretch !important;
+}
+/* First child is the mockup panel — give it a background so it shows */
+[data-title="Wireframes"] .wireframe-screen.active > *:first-child {
+  background: #fff !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  min-height: 0 !important;
+}
+[data-title="Wireframes"] .wireframe-screen.active > *:first-child iframe,
+[data-title="Wireframes"] .wireframe-screen.active > *:first-child img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: top left !important;
+}
+/* Make the wireframe nav bar inside the mockup show properly */
+[data-title="Wireframes"] .wireframe-nav-bar,
+[data-title="Wireframes"] .wf-nav {
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+
+/* ── SLIDE 4: force evidence matrix headers to wrap in columns ── */
+[data-title="Key Insights"] .evidence-matrix {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  overflow: hidden !important;
+}
+[data-title="Key Insights"] .evidence-matrix > * {
+  display: contents !important;
+}
+/* Target the actual header cells regardless of role */
+[data-title="Key Insights"] .evidence-matrix [role="columnheader"] {
+  font-size: 10px !important;
+  padding: 6px 8px !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  overflow: hidden !important;
+  line-height: 1.3 !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* ── SLIDE 9: restore wireframe layout — don't override wf-page ─ */
+[data-title="Wireframes"] .wireframe-screen.active {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  grid-template-columns: unset !important;
+  gap: 0 !important;
+}
+/* Browser nav bar at top */
+[data-title="Wireframes"] .wireframe-screen.active .wf-browser {
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 12px !important;
+  overflow: hidden !important;
+}
+[data-title="Wireframes"] .wireframe-screen.active .wf-browser span {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 12px !important;
+}
+/* Page body — 3 cols */
+[data-title="Wireframes"] .wireframe-screen.active .wf-page {
+  flex: 1 1 auto !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  padding: 10px !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+[data-title="Wireframes"] .wireframe-screen.active .wf-panel {
+  min-height: 0 !important;
+  overflow: hidden !important;
+  padding: 14px !important;
+  background: #fff !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+/* ── SLIDE 4: evidence-matrix — give the whole bottom section more width ── */
+[data-title="Key Insights"].active {
+  display: flex !important;
+  flex-direction: column !important;
+}
+/* The bottom section containing decision questions + matrix */
+[data-title="Key Insights"] .research-layout,
+[data-title="Key Insights"] .decision-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 14px !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+/* Force the matrix to use its full half-width */
+[data-title="Key Insights"] .evidence-matrix {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  grid-auto-rows: auto !important;
+  gap: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  align-content: start !important;
+}
+[data-title="Key Insights"] .evidence-matrix [role="row"] {
+  display: contents !important;
+}
+[data-title="Key Insights"] .evidence-matrix [role="columnheader"] {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 7px 8px !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  line-height: 1.3 !important;
+  overflow: hidden !important;
+}
+[data-title="Key Insights"] .evidence-matrix [role="cell"] {
+  font-size: 11px !important;
+  padding: 6px 8px !important;
+  line-height: 1.35 !important;
+  overflow: hidden !important;
+}
+
+/* Slide 4: give matrix MORE width by making layout 40/60 split */
+[data-title="Key Insights"] .research-layout,
+[data-title="Key Insights"] .decision-layout {
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr) !important;
+}
+
+/* Slide 4: exact class is evidence-layout */
+[data-title="Key Insights"] .evidence-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr) !important;
+  gap: 14px !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
